@@ -1,7 +1,13 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 export function Logo() {
   return (
-    <div>Logo</div>
-  )
+    <Link
+      href="/"
+      className="font-bold text-3xl text-[#151517] hover:cursor-pointer"
+    >
+      Formify
+    </Link>
+  );
 }
