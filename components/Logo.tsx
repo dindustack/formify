@@ -7,7 +7,7 @@ export function Logo() {
       href="/"
       className="font-bold text-3xl text-[#151517] hover:cursor-pointer"
     >
-      Formify
+      Formify.
     </Link>
   );
 }
