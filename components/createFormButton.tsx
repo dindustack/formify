@@ -1,36 +1,50 @@
 "use client";
+import { CreateForm } from "@/actions/form";
 import { formSchema, formSchemaType } from "@/schemas/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Shell } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "./ui/dialog";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { toast } from "./ui/use-toast";
 
 export function CreateFormButton() {
   const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: formSchemaType) {
-    console.log(values);
+  async function onSubmit(values: formSchemaType) {
+    try {
+      await CreateForm(values);
+      toast({
+        title: "Success",
+        description: "Form created successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong, please try again later",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
@@ -80,9 +94,7 @@ export function CreateFormButton() {
         </Form>
         <DialogFooter>
           <Button
-            onClick={() => {
-              form.handleSubmit(onSubmit);
-            }}
+            onClick={form.handleSubmit(onSubmit)}
             disabled={form.formState.isSubmitting}
             className="w-full mt-4"
           >
