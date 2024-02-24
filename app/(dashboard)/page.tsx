@@ -1,7 +1,7 @@
-import { BookCheck, MousePointerClick, Send, Split, Telescope } from "lucide-react";
+import { BookCheck, MousePointerClick, Split, Telescope } from "lucide-react";
 import { GetFormStats } from "@/actions/form";
 import { StatsCard } from "@/components/StatsCard";
-import { ReactNode, Suspense } from "react";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
