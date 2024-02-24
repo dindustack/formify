@@ -24,8 +24,8 @@ export function StatsCard(props: IStatsCardProps) {
       <CardContent>
         <div className="text-2xl font-bold">
           {loading && (
-            <Skeleton className="w-[100px] bg-gray-200  opacity-0 rounded-full">
-              <span>0</span>
+            <Skeleton className="w-[100px] h-8  opacity-0 rounded-full">
+              <span>{""}</span>
             </Skeleton>
           )}
           {!loading && value}

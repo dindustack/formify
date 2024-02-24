@@ -2,6 +2,8 @@ import { BookCheck, MousePointerClick, Split, Telescope } from "lucide-react";
 import { GetFormStats } from "@/actions/form";
 import { StatsCard } from "@/components/StatsCard";
 import { Suspense } from "react";
+import { Separator } from "@/components/ui/separator";
+import { CreateFormButton } from "@/components/createFormButton";
 
 export default function Home() {
   return (
@@ -9,6 +11,12 @@ export default function Home() {
       <Suspense fallback={<StatsCards loading={true} />}>
         <CardStatsWrapper />
       </Suspense>
+      <div className="my-12"></div>
+      <h2 className="text-4xl font-bold col-span-2">
+        Your Forms
+      </h2>
+      <Separator className="my-6" />
+      <CreateFormButton />
     </div>
   );
 }
