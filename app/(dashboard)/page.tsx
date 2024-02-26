@@ -1,9 +1,11 @@
 import { BookCheck, MousePointerClick, Split, Telescope } from "lucide-react";
-import { GetFormStats } from "@/actions/form";
+import { GetFormStats, GetForms } from "@/actions/form";
 import { StatsCard } from "@/components/StatsCard";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { Separator } from "@/components/ui/separator";
 import { CreateFormButton } from "@/components/createFormButton";
+import { FormCardSkeleton } from "@/components/FormCardSkeleton";
+import { FormCard } from "@/components/FormCard";
 
 export default function Home() {
   return (
@@ -16,6 +18,13 @@ export default function Home() {
       <Separator className="my-6" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <CreateFormButton />
+        <Suspense
+          fallback={[1, 2, 3, 4, 5].map((el) => (
+            <FormCardSkeleton key={el} />
+          ))}
+        >
+          <FormCards />
+        </Suspense>
       </div>
     </div>
   );
@@ -78,8 +87,9 @@ function StatsCards(props: StatsCardProps) {
   );
 }
 
-
 async function FormCards() {
-  
-}
+  const forms = await GetForms();
+  return (
+    <>{React.Children.toArray(forms.map((form) => <FormCard form={form} />))}</>
+  );
 }

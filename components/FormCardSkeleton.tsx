@@ -1,8 +1,8 @@
-import React from 'react'
-import { Skeleton } from './ui/skeleton'
+import React from "react";
+import { Skeleton } from "./ui/skeleton";
 
 export function FormCardSkeleton() {
   return (
-    <Skeleton className='border-2 border-primary-/20 h-[190px] w-full'>FormCardSkeleton</Ske>
-  )
+    <Skeleton className="border-2 border-primary-/20 h-[190px] w-full"></Skeleton>
+  );
 }
