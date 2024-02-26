@@ -2,7 +2,7 @@
 import { CreateForm } from "@/actions/form";
 import { formSchema, formSchemaType } from "@/schemas/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Shell } from "lucide-react";
+import { FileText, Shell } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import {
@@ -33,11 +33,13 @@ export function CreateFormButton() {
 
   async function onSubmit(values: formSchemaType) {
     try {
+      const formId = await CreateForm(values);
       await CreateForm(values);
       toast({
         title: "Success",
         description: "Form created successfully",
       });
+      console.log("FORM ID", formId);
     } catch (error) {
       toast({
         title: "Error",
@@ -50,7 +52,29 @@ export function CreateFormButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-[#151517]">Create new form</Button>
+        <Button
+          className="
+            group 
+            border
+            h-[190px] 
+            items-center 
+            justify-center 
+            bg-[#f4f4f0]
+            text-primary
+            flex 
+            flex-col
+            shadow-none
+            hover:cursor-pointer
+            hover:border-[2px]
+            hover:bg-background
+            border-primary
+            border-dashed
+            gap-4
+            "
+        >
+          <FileText className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
+          <p className="font-bold text-md">Create new form</p>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

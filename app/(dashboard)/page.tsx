@@ -12,11 +12,11 @@ export default function Home() {
         <CardStatsWrapper />
       </Suspense>
       <div className="my-12"></div>
-      <h2 className="text-4xl font-bold col-span-2">
-        Your Forms
-      </h2>
+      <h2 className="text-4xl font-bold col-span-2">Your Forms</h2>
       <Separator className="my-6" />
-      <CreateFormButton />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <CreateFormButton />
+      </div>
     </div>
   );
 }
@@ -76,4 +76,10 @@ function StatsCards(props: StatsCardProps) {
       />
     </div>
   );
+}
+
+
+async function FormCards() {
+  
+}
 }
