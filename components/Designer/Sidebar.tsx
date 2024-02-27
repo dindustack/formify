@@ -1,3 +1,5 @@
+import { FormElements } from "../Form/Elements";
+import { SidebarBtnElement } from "../SidebarBtnElement";
 
 export function DesignerSidebar() {
   return (
@@ -16,9 +18,8 @@ export function DesignerSidebar() {
         h-full
         "
     >
-      <div className="p-4 w-full">
-        <div className="bg-background ma"></div>
-      </div>
+      Elements
+      <SidebarBtnElement formElement={FormElements.TextField} />
     </aside>
   );
 }

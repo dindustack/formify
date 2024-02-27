@@ -2,8 +2,8 @@ import { Form } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import { ArrowRight, BookCheck, FilePenLine, Telescope } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -11,7 +11,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 
 export function FormCard({ form }: { form: Form }) {
   return (

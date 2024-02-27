@@ -4,8 +4,8 @@ import { StatsCard } from "@/components/StatsCard";
 import React, { Suspense } from "react";
 import { Separator } from "@/components/ui/separator";
 import { CreateFormButton } from "@/components/createFormButton";
-import { FormCardSkeleton } from "@/components/FormCardSkeleton";
-import { FormCard } from "@/components/FormCard";
+import { FormCardSkeleton } from "@/components/Form/CardSkeleton";
+import { FormCard } from "@/components/Form/Card";
 
 export default function Home() {
   return (
