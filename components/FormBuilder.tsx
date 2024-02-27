@@ -1,7 +1,8 @@
 import { Form } from "@prisma/client";
+import { Designer } from "./Designer";
 import { PreviewDialogBtn } from "./PreviewBtn";
-import { SaveFormBtn } from "./SaveFormBtn";
 import { PublishFormBtn } from "./PublishBtn";
+import { SaveFormBtn } from "./SaveFormBtn";
 
 export function FormBuilder({ form }: { form: Form }) {
   return (
@@ -31,9 +32,12 @@ export function FormBuilder({ form }: { form: Form }) {
           relative 
           overflow-y-auto 
           h-[200px]
+          bg-[#f4f4f4]
           bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]
           "
-      ></div>
+      >
+        <Designer />
+      </div>
     </main>
   );
 }
