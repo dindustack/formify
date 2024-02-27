@@ -21,6 +21,19 @@ export function FormBuilder({ form }: { form: Form }) {
           )}
         </div>
       </nav>
+      <div
+        className="
+          flex 
+          w-full 
+          flex-grow 
+          items-center 
+          justify-center 
+          relative 
+          overflow-y-auto 
+          h-[200px]
+          bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]
+          "
+      ></div>
     </main>
   );
 }

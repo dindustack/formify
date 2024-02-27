@@ -57,7 +57,7 @@ export function FormCard({ form }: { form: Form }) {
         {!form.published && (
           <Button asChild className="w-full mt-2 test-md gap-4">
             <Link href={`/builder/${form.id}`}>
-              EditForm <FilePenLine className="h-4 w-4" />
+              Edit Form <FilePenLine className="h-4 w-4" />
             </Link>
           </Button>
         )}
