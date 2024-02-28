@@ -1,5 +1,6 @@
-import { DesignerSidebar } from "./Sidebar";
+import { cn } from "@/lib/utils";
 import { useDroppable } from "@dnd-kit/core";
+import { DesignerSidebar } from "./Sidebar";
 
 export function Designer() {
   const droppable = useDroppable({
@@ -12,24 +13,22 @@ export function Designer() {
     <div className="flex w-full h-full">
       <div className="p-4 w-full">
         <div
-          className="
-            bg-background 
-            max-w-[920px]
-            h-full
-            m-auto
-            rounded-xl
-            flex
-            flex-col
-            flex-grow
-            items-center
-            justify-start
-            flex-1
-            overflow-y-auto
-            "
+          ref={droppable.setNodeRef}
+          className={cn(
+            "bg-background max-w-[920px] h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 overflow-y-auto",
+            droppable.isOver && "ring"
+          )}
         >
-          <p className="text-3xl text-primary flex flex-grow items-center font-bold">
-            Drop Here
-          </p>
+          {!droppable.isOver && (
+            <p className="text-3xl text-primary flex flex-grow items-center font-bold">
+              Drop Here
+            </p>
+          )}
+          {droppable.isOver && (
+            <div className="p-4 w-full">
+              <div className="h-[120px] rounded-md bg-primary/20"></div>
+            </div>
+          )}
         </div>
       </div>
       <DesignerSidebar />
