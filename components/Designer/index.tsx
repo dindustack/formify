@@ -26,7 +26,7 @@ export function Designer() {
           )}
           {droppable.isOver && (
             <div className="p-4 w-full">
-              <div className="h-[120px] border-2 border-dashed border-primary rounded-md bg-[#f4f4f4] "></div>
+              <div className="h-[120px] border-2 border-dashed border-primary rounded-md bg-[#f4f4f4]"></div>
             </div>
           )}
         </div>
