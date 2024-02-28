@@ -26,6 +26,8 @@ export function SidebarBtnElement({
         "flex flex-col gap-2 h-[120px] w-[120px] cursor-grab border-2 bg-white shadow-none border-primary",
         draggable.isDragging && "ring-2 ring-primary"
       )}
+      {...draggable.listeners}
+      {...draggable.attributes}
     >
       <Icon className="h-8 w-8 text-primary cursor-grab" />
       <p className="text-xs text-primary">{label}</p>

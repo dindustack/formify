@@ -16,7 +16,7 @@ export function Designer() {
           ref={droppable.setNodeRef}
           className={cn(
             "bg-background max-w-[920px] h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 overflow-y-auto",
-            droppable.isOver && "ring"
+            droppable.isOver && "ring-2 ring-primary"
           )}
         >
           {!droppable.isOver && (
@@ -26,7 +26,7 @@ export function Designer() {
           )}
           {droppable.isOver && (
             <div className="p-4 w-full">
-              <div className="h-[120px] rounded-md bg-primary/20"></div>
+              <div className="h-[120px] border-2 border-dashed border-primary rounded-md bg-[#f4f4f4] "></div>
             </div>
           )}
         </div>
