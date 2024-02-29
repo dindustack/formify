@@ -58,7 +58,9 @@ export function Designer() {
             <div className="flex flex-col text-primary w-full gap-2 p-4">
               {React.Children.toArray(
                 elements.map((element) => (
-                  <DesignerElementWrapper element={element} />
+                  <div className="mb-4">
+                    <DesignerElementWrapper element={element} />
+                  </div>
                 ))
               )}
             </div>

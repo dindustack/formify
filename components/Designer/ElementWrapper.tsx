@@ -1,15 +1,16 @@
-import { useDroppable } from "@dnd-kit/core";
+import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { FormElementInstance, FormElements } from "../Form/Elements";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
+import { useDesigner } from "@/lib/hooks/useDesigner";
 
 export function DesignerElementWrapper({
   element,
 }: {
   element: FormElementInstance;
 }) {
+  const { removeElement } = useDesigner();
   const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
   const topHalf = useDroppable({
     id: element.id + "-top",
@@ -29,10 +30,22 @@ export function DesignerElementWrapper({
     },
   });
 
+  const draggable = useDraggable({
+    id: element.id + "-drag-handler",
+    data: {
+      type: element.type,
+      elementId: element.id,
+      isDesignerElement: true,
+    },
+  });
+
   const DesignerElement = FormElements[element.type].designerComponent;
 
   return (
     <div
+      ref={draggable.setNodeRef}
+      {...draggable.listeners}
+      {...draggable.attributes}
       className="relative bg-[#f4f4f4] border border-primary h-[120px] flex flex-col text-primary
     hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
       onMouseEnter={() => {
@@ -58,13 +71,16 @@ export function DesignerElementWrapper({
             <Button
               className="flex justify-center h-full border 
                 rounded-md rounded-l-none bg-red-500"
+              onClick={() => {
+                removeElement(element.id);
+              }}
             >
               <X />
             </Button>
           </div>
           <div
             className="
-            absolute  top-1/2 left-1/2 -translate-x-1/2 
+            absolute top-1/2 left-1/2 -translate-x-1/2 
             -translate-y-1/2 animate-pulse z-[2]"
           >
             <p className="text-background text-sm">

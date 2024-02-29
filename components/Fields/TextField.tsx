@@ -57,7 +57,7 @@ function DesignerComponent({
         placeholder={placeholder}
         className="border-primary bg-white !opacity-100"
       />
-      {helperText && <p className="text-primary text-[0.8rem]">{helperText}</p>}
+      {helperText && <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>}
     </div>
   );
 }
