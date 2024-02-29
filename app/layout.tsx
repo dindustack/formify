@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { DesignerContextProvider } from "@/components/context/DesignerContext";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -21,8 +22,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={montserrat.className}>
-          {children}
-          <Toaster />
+          <DesignerContextProvider>
+            {children}
+            <Toaster />
+          </DesignerContextProvider>
         </body>
       </html>
     </ClerkProvider>
