@@ -1,5 +1,5 @@
 "use client";
-import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { Form } from "@prisma/client";
 import { Designer } from "../Designer";
 import { PreviewDialogBtn } from "../PreviewBtn";
@@ -14,7 +14,14 @@ export function FormBuilder({ form }: { form: Form }) {
     },
   });
 
-  const sensors = useSensors(mouseSensor)
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 300,
+      tolerance: 5,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor, touchSensor);
   return (
     <DndContext sensors={sensors}>
       <main className="flex flex-col w-full">

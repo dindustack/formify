@@ -45,7 +45,7 @@ export function DragOverlayWrapper() {
       node = (
         <div
           className="flex border border-primary bg-[#f4f4f4] rounded-md h-[120px] w-full
-        py-2 px-4"
+        py-4 px-4 pointer-events-none"
         >
           <DesignerElementComponent elementInstance={element} />
         </div>

@@ -1,7 +1,9 @@
-import { FormElements } from "../Form/Elements";
-import { SidebarBtnElement } from "../SidebarBtnElement";
+import { useDesigner } from "@/lib/hooks/useDesigner";
+import { FormElementsSidebar } from "../Form/ElementsSidebar";
+import { FormPropertiesSidebar } from "../Form/PropertiesSidebar";
 
 export function DesignerSidebar() {
+  const { selectedElement } = useDesigner();
   return (
     <aside
       className="
@@ -18,8 +20,8 @@ export function DesignerSidebar() {
         h-full
         "
     >
-      Elements
-      <SidebarBtnElement formElement={FormElements.TextField} />
+      {!selectedElement && <FormElementsSidebar />}
+      {selectedElement && <FormPropertiesSidebar />}
     </aside>
   );
 }
