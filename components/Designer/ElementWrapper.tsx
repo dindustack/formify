@@ -1,10 +1,10 @@
-import { useDraggable, useDroppable } from "@dnd-kit/core";
-import { FormElementInstance, FormElements } from "../Form/Elements";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useDesigner } from "@/lib/hooks/useDesigner";
+import { cn } from "@/lib/utils";
+import { useDraggable, useDroppable } from "@dnd-kit/core";
+import { Trash2 } from "lucide-react";
+import { useState } from "react";
+import { FormElementInstance, FormElements } from "../Form/Elements";
+import { Button } from "../ui/button";
 
 export function DesignerElementWrapper({
   element,
@@ -85,7 +85,7 @@ export function DesignerElementWrapper({
                 removeElement(element.id);
               }}
             >
-              <X />
+              <Trash2 />
             </Button>
           </div>
           <div
