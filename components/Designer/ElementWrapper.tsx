@@ -3,6 +3,7 @@ import { FormElementInstance, FormElements } from "../Form/Elements";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useDesigner } from "@/lib/hooks/useDesigner";
 
 export function DesignerElementWrapper({
@@ -10,8 +11,9 @@ export function DesignerElementWrapper({
 }: {
   element: FormElementInstance;
 }) {
-  const { removeElement } = useDesigner();
+  const { removeElement, selectedElement, setSelectedElement } = useDesigner();
   const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
+
   const topHalf = useDroppable({
     id: element.id + "-top",
     data: {
@@ -39,6 +41,8 @@ export function DesignerElementWrapper({
     },
   });
 
+  if (draggable.isDragging) return null;
+
   const DesignerElement = FormElements[element.type].designerComponent;
 
   return (
@@ -53,6 +57,10 @@ export function DesignerElementWrapper({
       }}
       onMouseLeave={() => {
         setMouseIsOver(false);
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedElement(element);
       }}
     >
       <div
@@ -69,9 +77,11 @@ export function DesignerElementWrapper({
 
           <div className="absolute right-0 h-full z-[2]">
             <Button
+              variant={"destructive"}
               className="flex justify-center h-full border 
                 rounded-md rounded-l-none bg-red-500"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 removeElement(element.id);
               }}
             >
@@ -89,7 +99,14 @@ export function DesignerElementWrapper({
           </div>
         </>
       )}
-      <div className="flex w-full h-[120px] items-center rounded-md bg-[] px-4 py-2 pointer-evevnts-none">
+      <div
+        className={cn(
+          "flex w-full h-[120px] items-center rounded-md px-4 py-2 pointer-evevnts-none",
+          mouseIsOver && "",
+          topHalf.isOver && "border-t-4 border-t-[#7a4fed]",
+          bottomHalf.isOver && "border-b-4 border-b-[#7a4fed]"
+        )}
+      >
         <DesignerElement elementInstance={element} />
       </div>
     </div>

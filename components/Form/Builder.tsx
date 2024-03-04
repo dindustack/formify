@@ -1,5 +1,5 @@
-"use client"
-import { DndContext } from "@dnd-kit/core";
+"use client";
+import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { Form } from "@prisma/client";
 import { Designer } from "../Designer";
 import { PreviewDialogBtn } from "../PreviewBtn";
@@ -8,8 +8,15 @@ import { SaveFormBtn } from "../SaveFormBtn";
 import { DragOverlayWrapper } from "../DragOverlayWrapper";
 
 export function FormBuilder({ form }: { form: Form }) {
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor)
   return (
-    <DndContext>
+    <DndContext sensors={sensors}>
       <main className="flex flex-col w-full">
         <nav className="flex justify-between border-b-2 p-4 gap-3 items-center">
           <h2 className="truncate font-medium">

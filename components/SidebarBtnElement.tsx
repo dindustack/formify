@@ -20,7 +20,6 @@ export function SidebarBtnElement({
   return (
     <Button
       ref={draggable.setNodeRef}
-      onClick={() => console.log("Have A sip")}
       variant={"outline"}
       className={cn(
         "flex flex-col gap-2 h-[120px] w-[120px] cursor-grab border-2 bg-white shadow-none border-primary",

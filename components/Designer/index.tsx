@@ -8,7 +8,13 @@ import React from "react";
 import { DesignerElementWrapper } from "./ElementWrapper";
 
 export function Designer() {
-  const { elements, addElement } = useDesigner();
+  const {
+    elements,
+    addElement,
+    selectedElement,
+    setSelectedElement,
+    removeElement,
+  } = useDesigner();
   const droppable = useDroppable({
     id: "designer-drop-area",
     data: {
@@ -36,7 +42,12 @@ export function Designer() {
 
   return (
     <div className="flex w-full h-full">
-      <div className="p-4 w-full">
+      <div
+        className="p-4 w-full"
+        onClick={() => {
+          if (selectedElement) setSelectedElement(null);
+        }}
+      >
         <div
           ref={droppable.setNodeRef}
           className={cn(
@@ -49,9 +60,12 @@ export function Designer() {
               Drop Here
             </p>
           )}
-          {droppable.isOver && (
+          {droppable.isOver && elements.length === 0 && (
             <div className="p-4 w-full">
-              <div className="h-[120px] border-2 border-dashed border-primary rounded-md bg-[#f4f4f4]"></div>
+              <div
+                className="h-[120px] border-2 border-dashed border-primary 
+              rounded-md bg-[#f4f4f4]"
+              />
             </div>
           )}
           {elements.length > 0 && (
