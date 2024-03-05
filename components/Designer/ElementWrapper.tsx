@@ -11,7 +11,7 @@ export function DesignerElementWrapper({
 }: {
   element: FormElementInstance;
 }) {
-  const { removeElement, selectedElement, setSelectedElement } = useDesigner();
+  const { removeElement, setSelectedElement } = useDesigner();
   const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
 
   const topHalf = useDroppable({
@@ -102,7 +102,6 @@ export function DesignerElementWrapper({
       <div
         className={cn(
           "flex w-full h-[120px] items-center rounded-md px-4 py-2 pointer-evevnts-none",
-          mouseIsOver && "",
           topHalf.isOver && "border-t-4 border-t-[#7a4fed]",
           bottomHalf.isOver && "border-b-4 border-b-[#7a4fed]"
         )}
