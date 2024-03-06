@@ -72,22 +72,23 @@ export function FormBuilder({ form }: { form: Form }) {
           width={window.innerWidth}
           height={window.innerHeight}
           recycle={false}
+          numberOfPieces={1000}
         />
         <div className="flex flex-col items-center justify-center h-full w-full">
-          <div className="max-w-lg">
+          <div className="px-4 md:px-0 md:max-w-lg">
             <h1
-              className="text-center text-4xl font-bold text-primary 
+              className="text-center text-2xl md:text-4xl font-bold text-primary 
         pb-2 mb-10"
             >
               🎊🎊 Form Published 🎊🎊
             </h1>
-            <h3 className="text-center text-lg text-primary  pb-10">
+            <h3 className="text-center text-md md:text-lg text-primary  pb-10">
               Anyone who has access to the link can view and complete the form.
             </h3>
             <div className="my-4 flex flex-col gap-2 items-center w-full pb-4">
               <div className="flex p-2  w-full justify-center items-center rounded-full bg-[#f7f9fc]">
                 <Input
-                  className="block w-full border-none shadow-none"
+                  className="block w-full border-none shadow-none focus-visible:ring-0"
                   readOnly
                   value={shareUrl}
                 />
@@ -106,7 +107,10 @@ export function FormBuilder({ form }: { form: Form }) {
               </div>
             </div>
             <div className="flex justify-between">
-              <Button asChild className="bg-primary text-white">
+              <Button
+                asChild
+                className="bg-primary  border-none shadow-none text-white"
+              >
                 <Link href={"/"} className="gap-2">
                   <ArrowLeft />
                   Return to home
