@@ -19,7 +19,7 @@ export function FormCard({ form }: { form: Form }) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 justify-between">
           <span className="truncate font-bold">{form.name}</span>
-          {form.published && <Badge>Published</Badge>}
+          {form.published && <Badge className="bg-green-500">Published</Badge>}
           {!form.published && <Badge variant={"destructive"}>Draft</Badge>}
         </CardTitle>
         <CardDescription className="flex items-center justify-between text-sm">
