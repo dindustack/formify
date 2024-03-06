@@ -8,15 +8,17 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { Form } from "@prisma/client";
-import { Copy, Shell } from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, Shell } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import Confetti from "react-confetti";
 import { Designer } from "../Designer";
 import { DragOverlayWrapper } from "../DragOverlayWrapper";
 import { PreviewDialogBtn } from "../PreviewBtn";
 import { PublishFormBtn } from "../PublishBtn";
 import { SaveFormBtn } from "../SaveFormBtn";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export function FormBuilder({ form }: { form: Form }) {
   const { setElements } = useDesigner();
@@ -66,6 +68,11 @@ export function FormBuilder({ form }: { form: Form }) {
   if (form.published) {
     return (
       <>
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+        />
         <div className="flex flex-col items-center justify-center h-full w-full">
           <div className="max-w-lg">
             <h1
@@ -97,6 +104,20 @@ export function FormBuilder({ form }: { form: Form }) {
                   <Copy className="w-4 h-4" />
                 </Button>
               </div>
+            </div>
+            <div className="flex justify-between">
+              <Button asChild className="bg-primary text-white">
+                <Link href={"/"} className="gap-2">
+                  <ArrowLeft />
+                  Return to home
+                </Link>
+              </Button>
+              <Button variant={"outline"} asChild className="border-primary">
+                <Link href={`/forms/${form.id}`} className="gap-2">
+                  Form details
+                  <ArrowRight />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
