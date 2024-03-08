@@ -16,7 +16,7 @@ export function StatsCard(props: IStatsCardProps) {
   return (
     <Card className={className}>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium text-[#949494]">
+        <CardTitle className="text-sm font-medium text-[#606060]">
           {title}
         </CardTitle>
         {icon}
@@ -30,7 +30,7 @@ export function StatsCard(props: IStatsCardProps) {
           )}
           {!loading && value}
         </div>
-        <p className="text-xs text-[#949494] pt-1">{helperText}</p>
+        <p className="text-xs text-[#606060] pt-1">{helperText}</p>
       </CardContent>
     </Card>
   );

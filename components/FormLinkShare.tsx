@@ -26,7 +26,7 @@ export function FormLinkShare({ shareUrl }: { shareUrl: string }) {
 
   return (
     <div className="w-full">
-      <div className="flex p-2  w-fulljustify-center items-center rounded-full bg-[#f7f9fc]">
+      <div className="flex p-2  w-fulljustify-center items-center rounded-full bg-[#f4f4f4]">
         <Input
           className="block w-full font-medium border-none shadow-none focus-visible:ring-0"
           readOnly

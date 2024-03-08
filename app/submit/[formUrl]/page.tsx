@@ -1,4 +1,6 @@
 import { GetFormContentByUrl } from "@/actions/form";
+import { FormElementInstance } from "@/components/Form/Elements";
+import { FormSubmit } from "@/components/Form/Submit";
 
 async function SubmitPage({
   params,
@@ -13,7 +15,9 @@ async function SubmitPage({
     throw new Error("form not found");
   }
 
-  return <div>SubmitPage: {params.formUrl}</div>;
+  const formContent = JSON.parse(form.content) as FormElementInstance[];
+
+  return <FormSubmit formUrl={params.formUrl} content={formContent} />;
 }
 
 export default SubmitPage;

@@ -36,7 +36,6 @@ export function CreateFormButton() {
   async function onSubmit(values: formSchemaType) {
     try {
       const formId = await CreateForm(values);
-      await CreateForm(values);
       toast({
         title: "Success",
         description: "Form created successfully",
@@ -135,5 +134,3 @@ export function CreateFormButton() {
     </Dialog>
   );
 }
-
-

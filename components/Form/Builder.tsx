@@ -86,7 +86,7 @@ export function FormBuilder({ form }: { form: Form }) {
               Anyone who has access to the link can view and complete the form.
             </h3>
             <div className="my-4 flex flex-col gap-2 items-center w-full pb-4">
-              <div className="flex p-2  w-full justify-center items-center rounded-full bg-[#f7f9fc]">
+              <div className="flex p-2  w-full justify-center items-center rounded-full bg-[#f4f4f4]">
                 <Input
                   className="block w-full border-none shadow-none focus-visible:ring-0"
                   readOnly
@@ -116,7 +116,7 @@ export function FormBuilder({ form }: { form: Form }) {
                   Return to home
                 </Link>
               </Button>
-              <Button variant={"outline"} asChild className="border-primary">
+              <Button variant={"link"} asChild className="border-primary">
                 <Link href={`/forms/${form.id}`} className="gap-2">
                   Form details
                   <ArrowRight />

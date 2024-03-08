@@ -1,18 +1,18 @@
 "use client";
 
 import { useDesigner } from "@/lib/hooks/useDesigner";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Type } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
+  SubmitFunction,
 } from "../Form/Elements";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import {
   Form,
   FormControl,
@@ -22,6 +22,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 
 const type: ElementsType = "TextField";
@@ -54,6 +56,17 @@ export const TextFieldFormElement: FormElement = {
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
+
+  validate: (
+    formElement: FormElementInstance,
+    currentValue: string
+  ): boolean => {
+    const element = formElement as CustomInstance;
+    if (element.extraAttributes.required) {
+      return currentValue.length > 0;
+    }
+    return true;
+  },
 };
 
 type CustomInstance = FormElementInstance & {
@@ -61,6 +74,34 @@ type CustomInstance = FormElementInstance & {
 };
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
+
+
+
+function DesignerComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) {
+  const element = elementInstance as CustomInstance;
+  const { label, required, placeholder, helperText } = element.extraAttributes;
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <Label className="text-primary">
+        {label}
+        {required && <span className="text-red-500">*</span>}
+      </Label>
+      <Input
+        readOnly
+        disabled
+        placeholder={placeholder}
+        className="border-primary bg-white !opacity-100"
+      />
+      {helperText && (
+        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+      )}
+    </div>
+  );
+}
 
 function PropertiesComponent({
   elementInstance,
@@ -202,51 +243,55 @@ function PropertiesComponent({
 
 function FormComponent({
   elementInstance,
+  submitValue,
+  isInvalid,
+  defaultValue,
 }: {
   elementInstance: FormElementInstance;
+  submitValue?: SubmitFunction;
+  isInvalid?: boolean;
+  defaultValue?: string;
 }) {
   const element = elementInstance as CustomInstance;
-  const { label, required, placeholder, helperText } = element.extraAttributes;
-  return (
-    <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </Label>
-      <Input
-        readOnly
-        disabled
-        placeholder={placeholder}
-        className="border-primary bg-white !opacity-100"
-      />
-      {helperText && (
-        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
-      )}
-    </div>
-  );
-}
+  const [value, setValue] = useState(defaultValue || "");
+  const [error, setError] = useState(false);
 
-function DesignerComponent({
-  elementInstance,
-}: {
-  elementInstance: FormElementInstance;
-}) {
-  const element = elementInstance as CustomInstance;
+  useEffect(() => {
+    setError(isInvalid === true);
+  }, [isInvalid]);
+
   const { label, required, placeholder, helperText } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">
+      <Label className={cn("text-primary", error && "text-red-500")}>
         {label}
         {required && <span className="text-red-500">*</span>}
       </Label>
       <Input
-        readOnly
-        disabled
         placeholder={placeholder}
-        className="border-primary bg-white !opacity-100"
+        className={cn(
+          "border-primary bg-white !opacity-100",
+          error && "text-red-500 border-red-500"
+        )}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={(e) => {
+          if (!submitValue) return;
+          const valid = TextFieldFormElement.validate(element, e.target.value);
+          setError(!valid);
+          if (!valid) return;
+          submitValue(element.id, e.target.value);
+        }}
+        value={value}
       />
       {helperText && (
-        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+        <p
+          className={cn(
+            "text-muted-foreground text-[0.8rem]",
+            error && "text-red-500"
+          )}
+        >
+          {helperText}
+        </p>
       )}
     </div>
   );
