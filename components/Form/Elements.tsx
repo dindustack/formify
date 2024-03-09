@@ -47,5 +47,5 @@ export const FormElements: FormElementsType = {
   TextField: TextFieldFormElement,
   TitleField: TitleFieldFormElement,
   SubTitleField: SubTitleFieldFormElement,
-  ParagraphField: ParaggraphFieldFormElement,
+  ParagraphField: ParagraphFieldFormElement,
 };

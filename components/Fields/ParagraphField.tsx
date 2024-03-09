@@ -32,7 +32,7 @@ const propertiesSchema = z.object({
   text: z.string().min(2).max(500),
 });
 
-export const ParaggraphFieldFormElement: FormElement = {
+export const ParagraphFieldFormElement: FormElement = {
   type,
   construct: (id: string) => ({
     id,
