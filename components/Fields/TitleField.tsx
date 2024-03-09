@@ -3,7 +3,7 @@
 import { useDesigner } from "@/lib/hooks/useDesigner";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Type } from "lucide-react";
+import { Heading1 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,20 +29,14 @@ import { Switch } from "../ui/switch";
 const type: ElementsType = "TitleField";
 
 const extraAttributes = {
-  label: "Text field",
-  helperText: "Helper text",
-  required: false,
-  placeholder: "Value here..",
+  title: "Title field",
 };
 
 const propertiesSchema = z.object({
-  label: z.string().min(2).max(50),
-  helperText: z.string().max(200),
-  required: z.boolean().default(false),
-  placeholder: z.string().max(50),
+  title: z.string().min(2).max(50),
 });
 
-export const TextFieldFormElement: FormElement = {
+export const TitleFieldFormElement: FormElement = {
   type,
   construct: (id: string) => ({
     id,
@@ -50,23 +44,14 @@ export const TextFieldFormElement: FormElement = {
     extraAttributes,
   }),
   designerBtnElement: {
-    icon: Type,
-    label: "Text Field",
+    icon: Heading1,
+    label: "Title Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 
-  validate: (
-    formElement: FormElementInstance,
-    currentValue: string
-  ): boolean => {
-    const element = formElement as CustomInstance;
-    if (element.extraAttributes.required) {
-      return currentValue.length > 0;
-    }
-    return true;
-  },
+  validate: () => true,
 };
 
 type CustomInstance = FormElementInstance & {
@@ -75,30 +60,17 @@ type CustomInstance = FormElementInstance & {
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 
-
-
 function DesignerComponent({
   elementInstance,
 }: {
   elementInstance: FormElementInstance;
 }) {
   const element = elementInstance as CustomInstance;
-  const { label, required, placeholder, helperText } = element.extraAttributes;
+  const { title } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </Label>
-      <Input
-        readOnly
-        disabled
-        placeholder={placeholder}
-        className="border-primary bg-white !opacity-100"
-      />
-      {helperText && (
-        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
-      )}
+      <Label className="text-primary">Title field</Label>
+      <p className="text-xl">{title}</p>
     </div>
   );
 }
@@ -114,10 +86,7 @@ function PropertiesComponent({
     resolver: zodResolver(propertiesSchema),
     mode: "onBlur",
     defaultValues: {
-      label: element.extraAttributes.label,
-      helperText: element.extraAttributes.helperText,
-      required: element.extraAttributes.required,
-      placeholder: element.extraAttributes.placeholder,
+      title: element.extraAttributes.title,
     },
   });
 
@@ -126,14 +95,11 @@ function PropertiesComponent({
   }, [element, form]);
 
   function applyChanges(values: propertiesFormSchemaType) {
-    const { label, helperText, placeholder, required } = values;
+    const { title } = values;
     updateElement(element.id, {
       ...element,
       extraAttributes: {
-        label,
-        helperText,
-        placeholder,
-        required,
+        title,
       },
     });
   }
@@ -148,10 +114,10 @@ function PropertiesComponent({
         {/* label */}
         <FormField
           control={form.control}
-          name="label"
+          name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Label</FormLabel>
+              <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -159,77 +125,6 @@ function PropertiesComponent({
                   onKeyDown={(event) => {
                     if (event.key === "Enter") event.currentTarget.blur();
                   }}
-                />
-              </FormControl>
-              <FormDescription>The label of the field.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* placeholder */}
-        <FormField
-          control={form.control}
-          name="placeholder"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Placeholder</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  className="border-primary shadow-none"
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") event.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>The placeholder of the field.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* helperText */}
-        <FormField
-          control={form.control}
-          name="helperText"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Helper Text</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  className="border-primary shadow-none"
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") event.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>The helperText of the field.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* required */}
-        <FormField
-          control={form.control}
-          name="required"
-          render={({ field }) => (
-            <FormItem
-              className="flex items-center justify-between 
-              rounded-lg border p-3 border-primary shadow-none "
-            >
-              <div className="space-y-0.5">
-                <FormLabel>Required</FormLabel>
-                <FormDescription>The required of the field.</FormDescription>
-              </div>
-
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  className="data-[state=checked]:bg-[#7a4fed] "
                 />
               </FormControl>
               <FormMessage />
@@ -243,56 +138,11 @@ function PropertiesComponent({
 
 function FormComponent({
   elementInstance,
-  submitValue,
-  isInvalid,
-  defaultValue,
 }: {
   elementInstance: FormElementInstance;
-  submitValue?: SubmitFunction;
-  isInvalid?: boolean;
-  defaultValue?: string;
 }) {
   const element = elementInstance as CustomInstance;
-  const [value, setValue] = useState(defaultValue || "");
-  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    setError(isInvalid === true);
-  }, [isInvalid]);
-
-  const { label, required, placeholder, helperText } = element.extraAttributes;
-  return (
-    <div className="flex flex-col gap-2 w-full">
-      <Label className={cn("text-primary", error && "text-red-500")}>
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </Label>
-      <Input
-        placeholder={placeholder}
-        className={cn(
-          "border-primary bg-white !opacity-100",
-          error && "text-red-500 border-red-500"
-        )}
-        onChange={(e) => setValue(e.target.value)}
-        onBlur={(e) => {
-          if (!submitValue) return;
-          const valid = TextFieldFormElement.validate(element, e.target.value);
-          setError(!valid);
-          if (!valid) return;
-          submitValue(element.id, e.target.value);
-        }}
-        value={value}
-      />
-      {helperText && (
-        <p
-          className={cn(
-            "text-muted-foreground text-[0.8rem]",
-            error && "text-red-500"
-          )}
-        >
-          {helperText}
-        </p>
-      )}
-    </div>
-  );
+  const { title } = element.extraAttributes;
+  return <p className="text-xl">{title}</p>;
 }
