@@ -1,24 +1,10 @@
 "use client";
 
-import { useDesigner } from "@/lib/hooks/useDesigner";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SeparatorHorizontal } from "lucide-react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Minus } from "lucide-react";
 import {
   ElementsType,
-  FormElement,
-  FormElementInstance,
+  FormElement
 } from "../Form/Elements";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 
@@ -31,7 +17,7 @@ export const SeparatorFieldFormElement: FormElement = {
     type,
   }),
   designerBtnElement: {
-    icon: SeparatorHorizontal,
+    icon: Minus,
     label: "Separator Field",
   },
   designerComponent: DesignerComponent,
