@@ -65,7 +65,7 @@ function DesignerComponent({
   const { title } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">Title field</Label>
+      <Label className="text-primary/50">Title field</Label>
       <p className="text-xl">{title}</p>
     </div>
   );

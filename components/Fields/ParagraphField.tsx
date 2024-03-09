@@ -2,7 +2,7 @@
 
 import { useDesigner } from "@/lib/hooks/useDesigner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Heading2, Pilcrow } from "lucide-react";
+import { Pilcrow } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,11 +21,12 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
 
 const type: ElementsType = "ParagraphField";
 
 const extraAttributes = {
-  text: "Text here",
+  text: "Text here...",
 };
 
 const propertiesSchema = z.object({
@@ -54,7 +55,6 @@ type CustomInstance = FormElementInstance & {
   extraAttributes: typeof extraAttributes;
 };
 
-
 function DesignerComponent({
   elementInstance,
 }: {
@@ -64,7 +64,7 @@ function DesignerComponent({
   const { text } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">Paragraph field</Label>
+      <Label className="text-primary/50">Paragraph field</Label>
       <p>{text}</p>
     </div>
   );
@@ -116,8 +116,9 @@ function PropertiesComponent({
             <FormItem>
               <FormLabel>Text</FormLabel>
               <FormControl>
-                <Input
+                <Textarea
                   {...field}
+                  rows={5}
                   className="border-primary shadow-none"
                   onKeyDown={(event) => {
                     if (event.key === "Enter") event.currentTarget.blur();
