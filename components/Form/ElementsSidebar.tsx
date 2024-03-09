@@ -17,13 +17,14 @@ export function FormElementsSidebar() {
         <SidebarBtnElement formElement={FormElements.SeparatorField} />
         <SidebarBtnElement formElement={FormElements.SpacerField} />
 
-        <div className="mb-8"></div>
-
-        <p className="text-sm text-primary col-span-1 md:col-span-2 my-2 place-self-start">
+        <p className="text-sm text-primary col-span-1 md:col-span-2 pt-8 my-2 place-self-start">
           Form elements
         </p>
+
         <SidebarBtnElement formElement={FormElements.TextField} />
         <SidebarBtnElement formElement={FormElements.NumberField} />
+        <SidebarBtnElement formElement={FormElements.TextAreaField} />
+        <SidebarBtnElement formElement={FormElements.DateField} />
       </div>
     </div>
   );

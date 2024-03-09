@@ -173,7 +173,7 @@ async function SubmissionsTable({ id }: { id: number }) {
                     value={row[column.id]}
                   />
                 ))}
-                <TableCell className="text-right text-[#6b7280]">
+                <TableCell className="text-right text-muted-foreground">
                   {formatDistance(row.submittedAt, new Date(), {
                     addSuffix: true,
                   })}
