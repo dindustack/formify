@@ -2,7 +2,7 @@
 
 import { useDesigner } from "@/lib/hooks/useDesigner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Heading1 } from "lucide-react";
+import { Heading1, Heading2 } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,17 +22,17 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-const type: ElementsType = "TitleField";
+const type: ElementsType = "SubTitleField";
 
 const extraAttributes = {
-  title: "Title field",
+  title: "SubTitle field",
 };
 
 const propertiesSchema = z.object({
   title: z.string().min(2).max(50),
 });
 
-export const TitleFieldFormElement: FormElement = {
+export const SubTitleFieldFormElement: FormElement = {
   type,
   construct: (id: string) => ({
     id,
@@ -40,8 +40,8 @@ export const TitleFieldFormElement: FormElement = {
     extraAttributes,
   }),
   designerBtnElement: {
-    icon: Heading1,
-    label: "Title Field",
+    icon: Heading2,
+    label: "SubTitle Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -65,8 +65,8 @@ function DesignerComponent({
   const { title } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">Title field</Label>
-      <p className="text-xl">{title}</p>
+      <Label className="text-primary">SubTitle field</Label>
+      <p className="text-lg">{title}</p>
     </div>
   );
 }
@@ -140,5 +140,5 @@ function FormComponent({
   const element = elementInstance as CustomInstance;
 
   const { title } = element.extraAttributes;
-  return <p className="text-xl">{title}</p>;
+  return <p className="text-lg">{title}</p>;
 }
