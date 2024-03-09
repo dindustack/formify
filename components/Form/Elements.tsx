@@ -1,3 +1,4 @@
+import { ParaggraphFieldFormElement } from "../Fields/ParagraphField";
 import { SubTitleFieldFormElement } from "../Fields/SubTitleField";
 import { TextFieldFormElement } from "../Fields/TextField";
 import { TitleFieldFormElement } from "../Fields/TitleField";
@@ -46,4 +47,5 @@ export const FormElements: FormElementsType = {
   TextField: TextFieldFormElement,
   TitleField: TitleFieldFormElement,
   SubTitleField: SubTitleFieldFormElement,
+  ParagraphField: ParaggraphFieldFormElement,
 };

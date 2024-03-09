@@ -2,14 +2,14 @@
 
 import { useDesigner } from "@/lib/hooks/useDesigner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Heading2 } from "lucide-react";
+import { Heading2, Pilcrow } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   ElementsType,
   FormElement,
-  FormElementInstance
+  FormElementInstance,
 } from "../Form/Elements";
 import {
   Form,
@@ -17,22 +17,22 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-const type: ElementsType = "SubTitleField";
+const type: ElementsType = "ParagraphField";
 
 const extraAttributes = {
-  title: "SubTitle field",
+  text: "Text here",
 };
 
 const propertiesSchema = z.object({
-  title: z.string().min(2).max(50),
+  text: z.string().min(2).max(500),
 });
 
-export const SubTitleFieldFormElement: FormElement = {
+export const ParaggraphFieldFormElement: FormElement = {
   type,
   construct: (id: string) => ({
     id,
@@ -40,8 +40,8 @@ export const SubTitleFieldFormElement: FormElement = {
     extraAttributes,
   }),
   designerBtnElement: {
-    icon: Heading2,
-    label: "SubTitle Field",
+    icon: Pilcrow,
+    label: "Paragraph Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -54,7 +54,6 @@ type CustomInstance = FormElementInstance & {
   extraAttributes: typeof extraAttributes;
 };
 
-type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 
 function DesignerComponent({
   elementInstance,
@@ -62,14 +61,16 @@ function DesignerComponent({
   elementInstance: FormElementInstance;
 }) {
   const element = elementInstance as CustomInstance;
-  const { title } = element.extraAttributes;
+  const { text } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">SubTitle field</Label>
-      <p className="text-lg">{title}</p>
+      <Label className="text-primary">Paragraph field</Label>
+      <p>{text}</p>
     </div>
   );
 }
+
+type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 
 function PropertiesComponent({
   elementInstance,
@@ -82,7 +83,7 @@ function PropertiesComponent({
     resolver: zodResolver(propertiesSchema),
     mode: "onBlur",
     defaultValues: {
-      title: element.extraAttributes.title,
+      text: element.extraAttributes.text,
     },
   });
 
@@ -91,11 +92,11 @@ function PropertiesComponent({
   }, [element, form]);
 
   function applyChanges(values: propertiesFormSchemaType) {
-    const { title } = values;
+    const { text } = values;
     updateElement(element.id, {
       ...element,
       extraAttributes: {
-        title,
+        text,
       },
     });
   }
@@ -110,10 +111,10 @@ function PropertiesComponent({
         {/* label */}
         <FormField
           control={form.control}
-          name="title"
+          name="text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Text</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -139,6 +140,6 @@ function FormComponent({
 }) {
   const element = elementInstance as CustomInstance;
 
-  const { title } = element.extraAttributes;
-  return <p className="text-lg">{title}</p>;
+  const { text } = element.extraAttributes;
+  return <p className="text-lg">{text}</p>;
 }
