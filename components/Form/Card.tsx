@@ -46,7 +46,7 @@ export function FormCard({ form }: { form: Form }) {
       <CardFooter>
         {/* Submission button */}
         {form.published && (
-          <Button asChild className="w-full mt-2 test-md gap-4">
+          <Button asChild className="w-full mt-2 text-md gap-4">
             <Link href={`/forms/${form.id}`}>
               View submissions <ArrowRight className="h-5 w-5" />
             </Link>

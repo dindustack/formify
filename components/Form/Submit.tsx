@@ -1,11 +1,12 @@
 "use client";
 
-import { Send, Shell } from "lucide-react";
+import { SubmitForm } from "@/actions/form";
+import { ArrowLeft, Send, Shell } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useRef, useState, useTransition } from "react";
 import { Button } from "../ui/button";
-import { FormElementInstance, FormElements } from "./Elements";
 import { toast } from "../ui/use-toast";
-import { SubmitForm } from "@/actions/form";
+import { FormElementInstance, FormElements } from "./Elements";
 
 type IFormSubmitProps = {
   formUrl: string;
@@ -77,6 +78,12 @@ export function FormSubmit({ formUrl, content }: IFormSubmitProps) {
         >
           <h1 className="text-2xl font-bold">Form submitted</h1>
           <p>Thank you for submitting the form.</p>
+
+          <Button asChild className="mt-2 text-md gap-4">
+            <Link href={"/"}>
+              <ArrowLeft className="h-5 w-5" /> Return to Homepage
+            </Link>
+          </Button>
         </div>
       </div>
     );

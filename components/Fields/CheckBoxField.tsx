@@ -64,6 +64,7 @@ export const CheckBoxFieldFormElement: FormElement = {
     if (element.extraAttributes.required) {
       return currentValue === "true";
     }
+
     return true;
   },
 };
@@ -112,7 +113,7 @@ function FormComponent({
 }) {
   const element = elementInstance as CustomInstance;
   const [value, setValue] = useState<boolean>(
-    defaultValue || "true" ? true : false
+    defaultValue === "true" ? true : false
   );
   const [error, setError] = useState(false);
 
