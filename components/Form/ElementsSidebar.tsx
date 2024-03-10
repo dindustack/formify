@@ -5,7 +5,7 @@ import { FormElements } from "./Elements";
 export function FormElementsSidebar() {
   return (
     <div>
-      <p className="text-sm text-primary">Drag and drop elements</p>
+      <p className="text-sm font-medium md:text-lg text-center text-primary">Drag and drop elements</p>
       <Separator className="my-2 bg-[#7a4fed]" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 place-items-center">
         <p className="text-sm text-primary font-medium col-span-1 md:col-span-2 my-2 place-self-start">
@@ -17,7 +17,7 @@ export function FormElementsSidebar() {
         <SidebarBtnElement formElement={FormElements.SeparatorField} />
         <SidebarBtnElement formElement={FormElements.SpacerField} />
 
-        <p className="text-sm text-primary col-span-1 md:col-span-2 pt-8 my-2 place-self-start">
+        <p className="text-sm text-primary col-span-1 md:col-span-2 pt-8 mb-2 place-self-start">
           Form elements
         </p>
 
@@ -26,6 +26,7 @@ export function FormElementsSidebar() {
         <SidebarBtnElement formElement={FormElements.TextAreaField} />
         <SidebarBtnElement formElement={FormElements.DateField} />
         <SidebarBtnElement formElement={FormElements.SelectField} />
+        <SidebarBtnElement formElement={FormElements.CheckBoxField} />
       </div>
     </div>
   );

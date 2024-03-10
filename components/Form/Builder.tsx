@@ -21,7 +21,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 export function FormBuilder({ form }: { form: Form }) {
-  const { setElements } = useDesigner();
+  const { setElements, setSelectedElement } = useDesigner();
   const [copied, setCopiedId] = useState<string>();
   const [isReady, setIsReady] = useState(false);
 
@@ -44,10 +44,12 @@ export function FormBuilder({ form }: { form: Form }) {
     if (isReady) return;
     const elements = JSON.parse(form.content);
     setElements(elements);
+    setSelectedElement(null);
+    setIsReady(true);
     const readyTimeout = setTimeout(() => setIsReady(true), 500);
 
     return () => clearTimeout(readyTimeout);
-  }, [form, isReady, setElements]);
+  }, [form, isReady, setElements, setSelectedElement]);
 
   useEffect(() => {
     setTimeout(() => {

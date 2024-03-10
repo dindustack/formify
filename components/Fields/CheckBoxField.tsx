@@ -3,7 +3,7 @@
 import { useDesigner } from "@/lib/hooks/useDesigner";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarDays, Type } from "lucide-react";
+import { SquareCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -25,16 +25,13 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
-import { Button } from "../ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { format } from "date-fns";
-import { Calendar } from "../ui/calendar";
+import { Checkbox } from "../ui/checkbox";
 
-const type: ElementsType = "DateField";
+const type: ElementsType = "CheckBoxField";
 
 const extraAttributes = {
-  label: "Date field",
-  helperText: "Pick a date",
+  label: "CheckBox field",
+  helperText: "Helper text",
   required: false,
 };
 
@@ -44,7 +41,7 @@ const propertiesSchema = z.object({
   required: z.boolean().default(false),
 });
 
-export const DateFieldFormElement: FormElement = {
+export const CheckBoxFieldFormElement: FormElement = {
   type,
   construct: (id: string) => ({
     id,
@@ -52,8 +49,8 @@ export const DateFieldFormElement: FormElement = {
     extraAttributes,
   }),
   designerBtnElement: {
-    icon: CalendarDays,
-    label: "Date Field",
+    icon: SquareCheck,
+    label: "CheckBox Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -65,7 +62,7 @@ export const DateFieldFormElement: FormElement = {
   ): boolean => {
     const element = formElement as CustomInstance;
     if (element.extraAttributes.required) {
-      return currentValue.length > 0;
+      return currentValue === "true";
     }
     return true;
   },
@@ -84,22 +81,84 @@ function DesignerComponent({
 }) {
   const element = elementInstance as CustomInstance;
   const { label, required, helperText } = element.extraAttributes;
+  const id = `checkbox-${element.id}`;
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <Label className="text-primary">
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </Label>
-      <Button
-        variant={"outline"}
-        className="w-full justify-start text-left border-primary font-normal shadow-none bg-white"
-      >
-        <CalendarDays className="mr-2 h-4 w-4" />
-        <span>Pick a date</span>
-      </Button>
-      {helperText && (
-        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
-      )}
+    <div className="flex items-start space-x-2">
+      <Checkbox id={id} className="bg-white w-5 h-5" />
+      <div className="grid gap-1.5 leading-none">
+        <Label htmlFor={id} className="text-primary">
+          {label}
+          {required && <span className="text-red-500">*</span>}
+        </Label>
+
+        {helperText && (
+          <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FormComponent({
+  elementInstance,
+  submitValue,
+  isInvalid,
+  defaultValue,
+}: {
+  elementInstance: FormElementInstance;
+  submitValue?: SubmitFunction;
+  isInvalid?: boolean;
+  defaultValue?: string;
+}) {
+  const element = elementInstance as CustomInstance;
+  const [value, setValue] = useState<boolean>(
+    defaultValue || "true" ? true : false
+  );
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setError(isInvalid === true);
+  }, [isInvalid]);
+
+  const { label, required, helperText } = element.extraAttributes;
+  const id = `checkbox-${element.id}`;
+  return (
+    <div className="flex items-start space-x-2">
+      <Checkbox
+        id={id}
+        checked={value}
+        className={cn("bg-white w-5 h-5", error && "border-red-500")}
+        onCheckedChange={(checked) => {
+          let value = false;
+          if (checked === true) value = true;
+
+          setValue(value);
+          if (!submitValue) return;
+          const stringValue = value ? "true" : "false";
+          const valid = CheckBoxFieldFormElement.validate(element, stringValue);
+          setError(!valid);
+          submitValue(element.id, stringValue);
+        }}
+      />
+      <div className="grid gap-1.5 leading-none">
+        <Label
+          htmlFor={id}
+          className={cn("text-primary", error && "text-red-500")}
+        >
+          {label}
+          {required && <span className="text-red-500">*</span>}
+        </Label>
+        {helperText && (
+          <p
+            className={cn(
+              "text-muted-foreground text-[0.8rem]",
+              error && "text-red-500"
+            )}
+          >
+            {helperText}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
@@ -215,77 +274,5 @@ function PropertiesComponent({
         />
       </form>
     </Form>
-  );
-}
-
-function FormComponent({
-  elementInstance,
-  submitValue,
-  isInvalid,
-  defaultValue,
-}: {
-  elementInstance: FormElementInstance;
-  submitValue?: SubmitFunction;
-  isInvalid?: boolean;
-  defaultValue?: string;
-}) {
-  const element = elementInstance as CustomInstance;
-  const [date, setDate] = useState<Date | undefined>(
-    defaultValue ? new Date(defaultValue) : undefined
-  );
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    setError(isInvalid === true);
-  }, [isInvalid]);
-
-  const { label, required, helperText } = element.extraAttributes;
-  return (
-    <div className="flex flex-col gap-2 w-full">
-      <Label className={cn("text-primary", error && "text-red-500")}>
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </Label>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={"outline"}
-            className={cn(
-              "w-full justify-start text-left font-normal border-primary shadow-none",
-              !date && "text-muted-foreground",
-              error && "border-red-500"
-            )}
-          >
-            <CalendarDays className="text-[#7a4fed] mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span className="text-primary">Pick a date</span>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={(date) => {
-              setDate(date);
-              if (!submitValue) return;
-              const value = date?.toUTCString() || "";
-              const valid = DateFieldFormElement.validate(element, value);
-              setError(!valid);
-              submitValue(element.id, value);
-            }}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
-      {helperText && (
-        <p
-          className={cn(
-            "text-muted-foreground text-[0.8rem]",
-            error && "text-red-500"
-          )}
-        >
-          {helperText}
-        </p>
-      )}
-    </div>
   );
 }
